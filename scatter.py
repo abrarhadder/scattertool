@@ -215,3 +215,14 @@ class ScatterObject(object):
                         "This is not valid. Resubmit values correctly.")
         else:
             self.scatter_object()
+
+
+def scatter_object(self):
+    if cmds.objectType(self.current_object_def) == "transform":
+        for target in self.scatter_target_def:
+            self.scatterObject = cmds.instance(self.current_object_def,
+                                               name=self.current_object_def
+                                                    + "_instance#")
+            x_point, y_point, z_point = cmds.pointPosition(target)
+            cmds.move(x_point, y_point, z_point, self.scatterObject)
+            self.create_scatter_randomization()
