@@ -1,4 +1,5 @@
 import logging
+import random
 
 from PySide2 import QtWidgets, QtCore
 from shiboken2 import wrapInstance
@@ -226,3 +227,17 @@ def scatter_object(self):
             x_point, y_point, z_point = cmds.pointPosition(target)
             cmds.move(x_point, y_point, z_point, self.scatterObject)
             self.create_scatter_randomization()
+
+    def create_scatter_randomization(self):
+        xRot = random.uniform(self.scatter_x_min, self.scatter_x_max)
+        yRot = random.uniform(self.scatter_y_min, self.scatter_y_max)
+        zRot = random.uniform(self.scatter_z_min, self.scatter_z_max)
+        cmds.rotate(xRot, yRot, zRot, self.scatterObject)
+        scaleFactorX = random.uniform(self.scatter_scale_xmin,
+                                      self.scatter_scale_xmax)
+        scaleFactorY = random.uniform(self.scatter_scale_ymin,
+                                      self.scatter_scale_ymax)
+        scaleFactorZ = random.uniform(self.scatter_scale_zmin,
+                                      self.scatter_scale_zmax)
+        cmds.scale(scaleFactorX, scaleFactorY, scaleFactorZ,
+                   self.scatterObject)
