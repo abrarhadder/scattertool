@@ -241,3 +241,28 @@ def scatter_object(self):
                                       self.scatter_scale_zmax)
         cmds.scale(scaleFactorX, scaleFactorY, scaleFactorZ,
                    self.scatterObject)
+
+
+def select_target_object(self):
+    self.scatter_target_def = cmds.ls(os=True, fl=True)
+    for obj in self.scatter_target_def:
+        if 'vtx[' not in obj:
+            self.scatter_target_def.remove(obj)
+    self.current_target_def = self.scatter_target_def
+
+    if len(self.current_target_def) <= 0:
+        self.current_target_def = ''
+        log.warning("No vertices are currently selected for scatter "
+                    "destination. Select one or more vertices and then "
+                    "try again.")
+
+
+def select_scatter_object(self):
+    self.scatter_obj_def = cmds.ls(os=True, o=True)
+    if len(self.scatter_obj_def) > 0:
+        self.current_object_def = self.scatter_obj_def[-1]
+    else:
+        self.current_object_def = None
+        log.warning("No objects are currently selected for object being"
+                    " scattered. Select one or more objects and then "
+                    "try again.")
