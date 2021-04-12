@@ -181,3 +181,25 @@ class ScatterUI(QtWidgets.QDialog):
         self.scatterobject.scatter_scale_zmax = self.scale_zmax.setValue(1.0)
         self.scatterobject.scatter_obj_def = self.scatter_obj.setText("")
         self.scatterobject.scatter_target_def = self.scatter_targ.setText("")
+
+
+class ScatterObject(object):
+    """Functionality to scatter UI and random rotation/scale"""
+
+    def __init__(self):
+        self.scatter_x_min = 0
+        self.scatter_x_max = 0
+        self.scatter_y_min = 0
+        self.scatter_y_max = 0
+        self.scatter_z_min = 0
+        self.scatter_z_max = 0
+        self.scatter_scale_xmin = 0
+        self.scatter_scale_xmax = 0
+        self.scatter_scale_ymin = 0
+        self.scatter_scale_ymax = 0
+        self.scatter_scale_zmin = 0
+        self.scatter_scale_zmax = 0
+        self.scatter_obj_def = None
+        self.current_object_def = None
+        self.scatter_target_def = None
+        self.current_target_def = None
