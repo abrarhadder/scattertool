@@ -183,6 +183,19 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addWidget(self.yrot_max, 4, 1)
         return layout
 
+        def _set_yrot_spinbox(self):
+        self.yrot_min = QtWidgets.QSpinBox()
+        self.yrot_min.setMinimum(0)
+        self.yrot_min.setMaximum(360)
+        self.yrot_min.setMinimumWidth(100)
+        self.yrot_min.setSingleStep(10)
+        self.yrot_max = QtWidgets.QSpinBox()
+        self.yrot_max.setMinimum(0)
+        self.yrot_max.setMaximum(360)
+        self.yrot_max.setValue(360)
+        self.yrot_max.setMinimumWidth(100)
+        self.yrot_max.setSingleStep(10)
+
     def _create_zrot_rand_field_ui(self):
         layout = QtWidgets.QGridLayout()
         self.z_min_lbl = QtWidgets.QLabel("Z Rotation Minimum")
@@ -197,19 +210,122 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addWidget(self.zrot_max, 6, 1)
         return layout
 
-    def _create_scale_rand_field_ui(self):
-        layout = QtWidgets.QGridLayout()
-        self.z_min_lbl = QtWidgets.QLabel("Scale Minimum")
-        self.z_max_lbl = QtWidgets.QLabel("Scale Maximum")
-        self.zrot_min = QtWidgets.QLineEdit()
+ def _set_zrot_spinbox(self):
+        self.zrot_min = QtWidgets.QSpinBox()
+        self.zrot_min.setMinimum(0)
+        self.zrot_min.setMaximum(360)
         self.zrot_min.setMinimumWidth(100)
-        self.zrot_max = QtWidgets.QLineEdit()
+        self.zrot_min.setSingleStep(10)
+        self.zrot_max = QtWidgets.QSpinBox()
+        self.zrot_max.setMinimum(0)
+        self.zrot_max.setMaximum(360)
+        self.zrot_max.setValue(360)
         self.zrot_max.setMinimumWidth(100)
-        layout.addWidget(self.z_min_lbl, 7, 0)
-        layout.addWidget(self.zrot_min, 8, 0)
-        layout.addWidget(self.z_max_lbl, 7, 1)
-        layout.addWidget(self.zrot_max, 8, 1)
+        self.zrot_max.setSingleStep(10)
+    def _create_xscale_rand_field_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.scale_xmin_lbl = QtWidgets.QLabel("Scale X Variation Minimum")
+        self.scale_xmax_lbl = QtWidgets.QLabel("Scale X Variation Maximum")
+        self._set_xscale_spinbox()
+        layout.addWidget(self.scale_xmin_lbl, 7, 0)
+        layout.addWidget(self.scale_xmin, 8, 0)
+        layout.addWidget(self.scale_xmax_lbl, 7, 1)
+        layout.addWidget(self.scale_xmax, 8, 1)
         return layout
+    def _create_yscale_rand_field_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.scale_ymin_lbl = QtWidgets.QLabel("Scale Y Variation Minimum")
+        self.scale_ymax_lbl = QtWidgets.QLabel("Scale Y Variation Maximum")
+        self._set_yscale_spinbox()
+        layout.addWidget(self.scale_ymin_lbl, 9, 0)
+        layout.addWidget(self.scale_ymin, 10, 0)
+        layout.addWidget(self.scale_ymax_lbl, 9, 1)
+        layout.addWidget(self.scale_ymax, 10, 1)
+        return layout
+    def _create_zscale_rand_field_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.scale_zmin_lbl = QtWidgets.QLabel("Scale Z Variation Minimum")
+        self.scale_zmax_lbl = QtWidgets.QLabel("Scale Z Variation Maximum")
+        self._set_zscale_spinbox()
+        layout.addWidget(self.scale_zmin_lbl, 11, 0)
+        layout.addWidget(self.scale_zmin, 12, 0)
+        layout.addWidget(self.scale_zmax_lbl, 11, 1)
+        layout.addWidget(self.scale_zmax, 12, 1)
+        return layout
+    def _set_xscale_spinbox(self):
+        self.scale_xmin = QtWidgets.QDoubleSpinBox()
+        self.scale_xmin.setMinimum(0.1)
+        self.scale_xmin.setValue(1.0)
+        self.scale_xmin.setMaximum(10)
+        self.scale_xmin.setMinimumWidth(100)
+        self.scale_xmin.setSingleStep(.1)
+        self.scale_xmax = QtWidgets.QDoubleSpinBox()
+        self.scale_xmax.setMinimum(0.1)
+        self.scale_xmax.setValue(1.0)
+        self.scale_xmax.setMaximum(10)
+        self.scale_xmax.setMinimumWidth(100)
+        self.scale_xmax.setSingleStep(.1)
+    def _set_yscale_spinbox(self):
+        self.scale_ymin = QtWidgets.QDoubleSpinBox()
+        self.scale_ymin.setMinimum(0.1)
+        self.scale_ymin.setValue(1.0)
+        self.scale_ymin.setMaximum(10)
+        self.scale_ymin.setMinimumWidth(100)
+        self.scale_ymin.setSingleStep(.1)
+        self.scale_ymax = QtWidgets.QDoubleSpinBox()
+        self.scale_ymax.setMinimum(0.1)
+        self.scale_ymax.setValue(1.0)
+        self.scale_ymax.setMaximum(10)
+        self.scale_ymax.setMinimumWidth(100)
+        self.scale_ymax.setSingleStep(.1)
+    def _set_zscale_spinbox(self):
+        self.scale_zmin = QtWidgets.QDoubleSpinBox()
+        self.scale_zmin.setMinimum(0.1)
+        self.scale_zmin.setValue(1.0)
+        self.scale_zmin.setMaximum(10)
+        self.scale_zmin.setMinimumWidth(100)
+        self.scale_zmin.setSingleStep(.1)
+        self.scale_zmax = QtWidgets.QDoubleSpinBox()
+        self.scale_zmax.setMinimum(0.1)
+        self.scale_zmax.setValue(1.0)
+        self.scale_zmax.setMaximum(10)
+        self.scale_zmax.setMinimumWidth(100)
+        self.scale_zmax.setSingleStep(.1)
+    def _create_selected_vert_percentage_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.selected_vert_lbl = QtWidgets.QLabel("Target Vertices Random "
+                                                  "Scatter Percentage")
+        self.obj_embed_offset_lbl = QtWidgets.QLabel("Scatter Object Embed "
+                                                     "Position Offset")
+        self._set_selected_vert_percentage_spinbox()
+        self._create_y_position_offset_spinbox()
+        layout.addWidget(self.selected_vert_lbl, 14, 0)
+        layout.addWidget(self.obj_embed_offset_lbl, 14, 1)
+        layout.addWidget(self.selected_vert_perc, 15, 0)
+        layout.addWidget(self.obj_embed_offset, 15, 1)
+        return layout
+    def _create_y_position_offset_spinbox(self):
+        self.obj_embed_offset = QtWidgets.QDoubleSpinBox()
+        self.obj_embed_offset.setMinimum(-10)
+        self.obj_embed_offset.setValue(0)
+        self.obj_embed_offset.setMaximum(10)
+        self.obj_embed_offset.setMinimumWidth(100)
+        self.obj_embed_offset.setSingleStep(.1)
+    def _set_selected_vert_percentage_spinbox(self):
+        self.selected_vert_perc = QtWidgets.QSpinBox()
+        self.selected_vert_perc.setMinimum(0)
+        self.selected_vert_perc.setMaximum(100)
+        self.selected_vert_perc.setValue(100)
+        self.selected_vert_perc.setMinimumWidth(100)
+        self.selected_vert_perc.setSingleStep(5)
+    def _create_bottom_buttons_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.scatter_btn = QtWidgets.QPushButton("Scatter")
+        self.reset_btn = QtWidgets.QPushButton("Reset")
+        layout.addWidget(self.scatter_btn, 16, 0)
+        layout.addWidget(self.reset_btn, 16, 1)
+        return layout
+        
 
     def _create_scatter_field_headers(self):
         self.scatter_targ_lbl = QtWidgets.QLabel("Scatter Object Target")
