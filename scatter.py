@@ -423,10 +423,35 @@ if self.scatter_percentage == 0:
             self.scatter_object_align_normals_and_rand_rotation()
         
 
-
 def scatter_object(self):
-    if cmds.objectType(self.current_object_def) == "transform":
-        for target in self.scatter_target_def:
+        object_grouping = cmds.group(empty=True, name="instance_group#")
+        for target in self.percentage_selection:
+            self.scatterObject = cmds.instance(self.current_object_def,
+                                               name=self.current_object_def
+                                               + "_instance#")
+            cmds.parent(self.scatterObject, object_grouping)
+            x_point, y_point, z_point = cmds.pointPosition(target)
+            cmds.move(x_point, y_point, z_point, self.scatterObject)
+            self.create_scale_scatter_randomization()
+            self.offset_scatter_object_embed_pos_without_constraint()
+            self.create_rotation_scatter_randomization()
+    def scatter_object_align_normals(self):
+        object_grouping = cmds.group(empty=True, name="instance_group#")
+        for target in self.percentage_selection:
+            self.scatterObject = cmds.instance(self.current_object_def,
+                                               name=self.current_object_def
+                                               + "_instance#")
+            cmds.parent(self.scatterObject, object_grouping)
+            x_point, y_point, z_point = cmds.pointPosition(target)
+            cmds.move(x_point, y_point, z_point, self.scatterObject)
+            self.create_scale_scatter_randomization()
+            constraint = cmds.normalConstraint(self.scatter_target_def,
+                                               self.scatterObject)
+            cmds.delete(constraint)
+            self.offset_scatter_object_embed_pos()
+    def scatter_object_align_normals_and_rand_rotation(self):
+        object_grouping = cmds.group(empty=True, name="instance_group#")
+        for target in self.percentage_selection:
             self.scatterObject = cmds.instance(self.current_object_def,
                                                name=self.current_object_def
                                                     + "_instance#")
