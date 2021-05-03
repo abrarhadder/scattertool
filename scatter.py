@@ -449,30 +449,32 @@ def scatter_object(self):
                                                self.scatterObject)
             cmds.delete(constraint)
             self.offset_scatter_object_embed_pos()
-    def scatter_object_align_normals_and_rand_rotation(self):
-        object_grouping = cmds.group(empty=True, name="instance_group#")
-        for target in self.percentage_selection:
-            self.scatterObject = cmds.instance(self.current_object_def,
-                                               name=self.current_object_def
-                                                    + "_instance#")
-            x_point, y_point, z_point = cmds.pointPosition(target)
-            cmds.move(x_point, y_point, z_point, self.scatterObject)
-            self.create_scatter_randomization()
-
-    def create_scatter_randomization(self):
-        xRot = random.uniform(self.scatter_x_min, self.scatter_x_max)
-        yRot = random.uniform(self.scatter_y_min, self.scatter_y_max)
-        zRot = random.uniform(self.scatter_z_min, self.scatter_z_max)
-        cmds.rotate(xRot, yRot, zRot, self.scatterObject)
-        scaleFactorX = random.uniform(self.scatter_scale_xmin,
-                                      self.scatter_scale_xmax)
-        scaleFactorY = random.uniform(self.scatter_scale_ymin,
-                                      self.scatter_scale_ymax)
-        scaleFactorZ = random.uniform(self.scatter_scale_zmin,
-                                      self.scatter_scale_zmax)
-        cmds.scale(scaleFactorX, scaleFactorY, scaleFactorZ,
-                   self.scatterObject)
-
+            self.create_rotation_scatter_randomization()
+    def offset_scatter_object_embed_pos(self):
+        cmds.move(self.obj_pos_offset, 0, 0, self.scatterObject,
+                  objectSpace=True, relative=True)
+    def offset_scatter_object_embed_pos_without_constraint(self):
+        cmds.move(0, self.obj_pos_offset, 0, self.scatterObject,
+                  objectSpace=True, relative=True)
+    def select_target_object(self):
+        selection = cmds.ls(os=True, fl=True)
+        self.scatter_target_def = cmds.polyListComponentConversion(
+            selection, toVertex=True)
+        self.scatter_target_def = cmds.filterExpand(self.scatter_target_def,
+                                                    selectionMask=31)
+        if self.scatter_target_def is None:
+            self.current_target_def = ''
+            log.warning("No object or vertices are currently selected for "
+                        "scatter destination. Select one or more vertices, or "
+                        "an object and then try again.")
+        else:
+            self.current_target_def = self.scatter_target_def
+    def random_scatter_vertices(self):
+        random_amount = int(round(len(self.scatter_target_def)
+                                  * (self.scatter_percentage * 0.01)))
+        self.percentage_selection = random.sample(self.scatter_target_def,
+                                                  k=random_amount)
+        cmds.select(self.percentage_selection)
 
 def select_target_object(self):
     self.scatter_target_def = cmds.ls(os=True, fl=True)
