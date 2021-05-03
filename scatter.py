@@ -326,7 +326,6 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addWidget(self.reset_btn, 16, 1)
         return layout
         
-
     def _create_scatter_field_headers(self):
         self.scatter_targ_lbl = QtWidgets.QLabel("Scatter Object Target")
         self.scatter_targ_lbl.setStyleSheet("font: bold")
@@ -407,7 +406,22 @@ class ScatterObject(object):
             log.warning("Minimum value(s) greater than maximum value(s). "
                         "This is not valid. Resubmit values correctly.")
         else:
+if self.scatter_percentage == 0:
+                log.warning("Percentage set to 0, no vertices randomly "
+                            "selected. Specify a higher percentage.")
+            else:
+                self.scatter_check_internal_align_check()
+    def scatter_check_internal_align_check(self):
+        if self.form_of_scatter == 0:
+            self.random_scatter_vertices()
             self.scatter_object()
+        elif self.form_of_scatter == 1:
+            self.random_scatter_vertices()
+            self.scatter_object_align_normals()
+        elif self.form_of_scatter == 2:
+            self.random_scatter_vertices()
+            self.scatter_object_align_normals_and_rand_rotation()
+        
 
 
 def scatter_object(self):
