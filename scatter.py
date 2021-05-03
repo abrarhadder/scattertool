@@ -133,6 +133,28 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addWidget(self.scatter_obj_pb, 1, 4)
         return layout
 
+        def _create_align_to_normals_ui(self):
+        layout = QtWidgets.QGridLayout()
+        self.align_to_normals = QtWidgets.QCheckBox("Align to Normals")
+        layout.addWidget(self.align_to_normals, 2, 0)
+        self.align_to_normals_and_rotation \
+            = QtWidgets.QCheckBox("Align to Normals with Random Rotation")
+        layout.addWidget(self.align_to_normals_and_rotation, 2, 1)
+        return layout
+    def _set_align_to_normals_values(self):
+        if self.align_to_normals.isChecked():
+            self.align_to_normals_and_rotation.setChecked(False)
+            self.scatterobject.form_of_scatter = 1
+        else:
+            self.scatterobject.form_of_scatter = 0
+    def _set_align_to_normals_values_and_rotate_randomly(self):
+        if self.align_to_normals_and_rotation.isChecked():
+            self.align_to_normals.setChecked(False)
+            self.scatterobject.form_of_scatter = 2
+        else:
+            self.scatterobject.form_of_scatter = 0
+
+
     def _create_xrot_rand_field_ui(self):
         layout = QtWidgets.QGridLayout()
         self.x_min_lbl = QtWidgets.QLabel("X Rotation Minimum")
