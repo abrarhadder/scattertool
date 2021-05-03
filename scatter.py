@@ -60,8 +60,62 @@ class ScatterUI(QtWidgets.QDialog):
         self.setLayout(main_lay)
         return main_lay
 
+         def layout_creation(self):
+        """Assigns variable names to method calls"""
+        self.scatter_field_lay = self._create_scatter_field_ui()
+        self.align_to_normals_lay = self._create_align_to_normals_ui()
+        self.xrot_rand_lay = self._create_xrot_rand_field_ui()
+        self.yrot_rand_lay = self._create_yrot_rand_field_ui()
+        self.zrot_rand_lay = self._create_zrot_rand_field_ui()
+        self.xscale_rand_lay = self._create_xscale_rand_field_ui()
+        self.yscale_rand_lay = self._create_yscale_rand_field_ui()
+        self.zscale_rand_lay = self._create_zscale_rand_field_ui()
+        self.selected_vert_perc_rand_lay = \
+            self._create_selected_vert_percentage_ui()
+        self.bottom_button_rand_lay = self._create_bottom_buttons_ui()
+
     def create_connections(self):
         """Connects Signals and Slots"""
+
+         self.scatter_btn.clicked.connect(self._scatter_click)
+        self.reset_btn.clicked.connect(self._reset_click)
+        self.scatter_obj_pb.clicked.connect(self._select_scatter_object_click)
+        self.scatter_targ_pb.clicked.connect(self._select_scatter_target_click)
+        self.align_to_normals.clicked.connect(self._align_to_normals_click)
+        self.align_to_normals_and_rotation.clicked.connect(
+            self._align_to_normals_and_random_rotate_click)
+    @QtCore.Slot()
+    def _select_scatter_object_click(self):
+        """Sets scatter object to name of last selected object"""
+        self._set_selected_scatter_object()
+    @QtCore.Slot()
+    def _select_scatter_target_click(self):
+        """Sets scatter object to name of last selected object"""
+        self._set_selected_scatter_target()
+    @QtCore.Slot()
+    def _align_to_normals_click(self):
+        """Aligns to normals when box is checked"""
+        self._set_align_to_normals_values()
+    @QtCore.Slot()
+    def _align_to_normals_and_random_rotate_click(self):
+        """Aligns to normals when box is checked"""
+        self._set_align_to_normals_values_and_rotate_randomly()
+    @QtCore.Slot()
+    def _scatter_click(self):
+        """Scatters object with randomization specifications"""
+        if len(self.scatter_obj.text()) <= 0:
+            log.warning("Scatter Failed: Scatter Object Not Selected. Select "
+                        "a Scatter Object to fix this.")
+        elif len(self.scatter_targ.text()) <= 0:
+            log.warning("Scatter Failed: Scatter Destination Object Not "
+                        "Selected. Select a Scatter Object to fix this.")
+        else:
+            self._set_scatterobject_properties_from_ui()
+            self.scatterobject.scatter_check()
+    @QtCore.Slot()
+    def _reset_click(self):
+        """Reset UI values to default"""
+        self._reset_scatterobject_properties_from_ui()
 
     def _create_scatter_field_ui(self):
         layout = self._create_scatter_field_headers()
