@@ -476,26 +476,26 @@ def scatter_object(self):
                                                   k=random_amount)
         cmds.select(self.percentage_selection)
 
-def select_target_object(self):
-    self.scatter_target_def = cmds.ls(os=True, fl=True)
-    for obj in self.scatter_target_def:
-        if 'vtx[' not in obj:
-            self.scatter_target_def.remove(obj)
-    self.current_target_def = self.scatter_target_def
-
-    if len(self.current_target_def) <= 0:
-        self.current_target_def = ''
-        log.warning("No vertices are currently selected for scatter "
-                    "destination. Select one or more vertices and then "
-                    "try again.")
-
-
-def select_scatter_object(self):
-    self.scatter_obj_def = cmds.ls(os=True, o=True)
-    if len(self.scatter_obj_def) > 0:
-        self.current_object_def = self.scatter_obj_def[-1]
-    else:
-        self.current_object_def = None
-        log.warning("No objects are currently selected for object being"
-                    " scattered. Select one or more objects and then "
-                    "try again.")
+def create_rotation_scatter_randomization(self):
+        x_rot = random.uniform(self.scatter_x_min, self.scatter_x_max)
+        y_rot = random.uniform(self.scatter_y_min, self.scatter_y_max)
+        z_rot = random.uniform(self.scatter_z_min, self.scatter_z_max)
+        cmds.rotate(x_rot, y_rot, z_rot, self.scatterObject)
+    def create_scale_scatter_randomization(self):
+        scale_factor_x = random.uniform(self.scatter_scale_xmin,
+                                        self.scatter_scale_xmax)
+        scale_factor_y = random.uniform(self.scatter_scale_ymin,
+                                        self.scatter_scale_ymax)
+        scale_factor_z = random.uniform(self.scatter_scale_zmin,
+                                        self.scatter_scale_zmax)
+        cmds.scale(scale_factor_x, scale_factor_y, scale_factor_z,
+                   self.scatterObject)
+    def select_scatter_object(self):
+        self.scatter_obj_def = cmds.ls(os=True, o=True)
+        if len(self.scatter_obj_def) > 0:
+            self.current_object_def = self.scatter_obj_def[-1]
+        else:
+            self.current_object_def = None
+            log.warning("No objects are currently selected for object being"
+                        " scattered. Select one or more objects and then "
+                        "try again.")
