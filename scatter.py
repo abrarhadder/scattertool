@@ -41,24 +41,30 @@ class ScatterUI(QtWidgets.QDialog):
         layout.addLayout(self.xrot_rand_lay)
         layout.addLayout(self.yrot_rand_lay)
         layout.addLayout(self.zrot_rand_lay)
-        layout.addLayout(self.scale_rand_lay)
+         layout.addLayout(self.xscale_rand_lay)
+        layout.addLayout(self.yscale_rand_lay)
+        layout.addLayout(self.zscale_rand_lay)
+        layout.addLayout(self.selected_vert_perc_rand_lay)
         layout.addStretch()
+        layout.addLayout(self.bottom_button_rand_lay)
         return layout
 
     def layout_setup(self):
+        """Sets row min heights to fix layout spacing"""
         main_lay = QtWidgets.QVBoxLayout()
-        self.scatter_field_lay = self._create_scatter_field_ui()
-        self.xrot_rand_lay = self._create_xrot_rand_field_ui()
-        self.yrot_rand_lay = self._create_yrot_rand_field_ui()
-        self.zrot_rand_lay = self._create_zrot_rand_field_ui()
-        self.scale_rand_lay = self._create_scale_rand_field_ui()
+        self.layout_creation()
         self.xrot_rand_lay.setRowMinimumHeight(0, 20)
         self.xrot_rand_lay.setRowMinimumHeight(1, 20)
         self.yrot_rand_lay.setRowMinimumHeight(0, 20)
         self.zrot_rand_lay.setRowMinimumHeight(0, 20)
-        self.scale_rand_lay.setRowMinimumHeight(0, 20)
+        self.xscale_rand_lay.setRowMinimumHeight(0, 40)
+        self.yscale_rand_lay.setRowMinimumHeight(0, 20)
+        self.zscale_rand_lay.setRowMinimumHeight(0, 20)
+        self.selected_vert_perc_rand_lay.setRowMinimumHeight(0, 40)
+        self.bottom_button_rand_lay.setRowMinimumHeight(0, 20)
         self.setLayout(main_lay)
         return main_lay
+    
 
          def layout_creation(self):
         """Assigns variable names to method calls"""
@@ -119,18 +125,18 @@ class ScatterUI(QtWidgets.QDialog):
 
     def _create_scatter_field_ui(self):
         layout = self._create_scatter_field_headers()
-        self.scatter_targ = QtWidgets.QLineEdit()
-        self.scatter_targ.setMinimumWidth(100)
-        self.scatter_targ_pb = QtWidgets.QPushButton("Select")
-        self.scatter_targ_pb.setFixedWidth(50)
         self.scatter_obj = QtWidgets.QLineEdit()
         self.scatter_obj.setMinimumWidth(100)
         self.scatter_obj_pb = QtWidgets.QPushButton("Select")
         self.scatter_obj_pb.setFixedWidth(50)
-        layout.addWidget(self.scatter_targ, 1, 0)
-        layout.addWidget(self.scatter_targ_pb, 1, 2)
-        layout.addWidget(self.scatter_obj, 1, 3)
-        layout.addWidget(self.scatter_obj_pb, 1, 4)
+        self.scatter_targ = QtWidgets.QLineEdit()
+        self.scatter_targ.setMinimumWidth(100)
+        self.scatter_targ_pb = QtWidgets.QPushButton("Select")
+        self.scatter_targ_pb.setFixedWidth(50)
+        layout.addWidget(self.scatter_obj, 1, 0)
+        layout.addWidget(self.scatter_obj_pb, 1, 2)
+        layout.addWidget(self.scatter_targ, 1, 3)
+        layout.addWidget(self.scatter_targ_pb, 1, 4)
         return layout
 
         def _create_align_to_normals_ui(self):
@@ -421,7 +427,7 @@ if self.scatter_percentage == 0:
         elif self.form_of_scatter == 2:
             self.random_scatter_vertices()
             self.scatter_object_align_normals_and_rand_rotation()
-        
+
 
 def scatter_object(self):
         object_grouping = cmds.group(empty=True, name="instance_group#")
